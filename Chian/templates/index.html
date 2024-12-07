@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat AI</title>
+</head>
+<body>
+    <h1>Chat AI</h1>
+    <form id="query-form">
+        <input type="text" id="question" placeholder="질문을 입력하세요" />
+        <button type="submit">전송</button>
+    </form>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('query-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const question = document.getElementById('question').value;
+            const response = await fetch('/query', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({question}),
+            });
+            const data = await response.json();
+            //여기가 백에서 데이터 받은걸 html에서 출력하는 부분
+            document.getElementById('response').innerText = JSON.stringify(data);
+        });
+    </script>
+</body>
+</html>
